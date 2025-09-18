@@ -9,7 +9,7 @@ def write_video_to_file(origin_path, output_path):
         ok, img = cap.read()
         if not ok:
             break
-        cv.imshow('img', img)
+        cv.imshow("img", img)
         vid_writer.write(img)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
