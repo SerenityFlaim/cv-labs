@@ -20,17 +20,32 @@ while True:
     mask2 = cv.inRange(hsv_img, lower2, upper2)
     mask = cv.bitwise_or(mask1, mask2)
 
+    final_img = img.copy()
+
     opening = cv.dilate(cv.erode(mask, kernel, iterations=1), kernel, iterations=1)
     closing = cv.erode(cv.dilate(mask, kernel, iterations=1), kernel, iterations=1)
+
 
     filter_img = cv.bitwise_and(img, img, mask=mask)
     open_img = cv.bitwise_and(img, img, mask=opening)
     close_img = cv.bitwise_and(img, img, mask=closing)
     
+
+    # cv.imshow('mask', mask)
+    # cv.imshow('opening', opening)
+    # cv.imshow('closing', closing)
+    M = cv.moments(opening)
+    area = M['m00']
+    if area != 0:
+        cx = int(M['m10'] / area)
+        cy = int(M['m01'] / area)
+        cv.circle(filter_img, (cx, cy), 6, (0,255,0), -1)
+        cv.putText(filter_img, f"Area: {int(area)}", (10,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
+        cv.putText(filter_img, f"Centroid: ({cx},{cy})", (10,60), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,0), 2)
+    else:
+        cv.putText(filter_img, "No object", (10,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
+
     cv.imshow('webcam', filter_img)
-    cv.imshow('mask', mask)
-    cv.imshow('opening', opening)
-    cv.imshow('closing', closing)
 
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
