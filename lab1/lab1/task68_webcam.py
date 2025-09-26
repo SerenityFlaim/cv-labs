@@ -10,7 +10,9 @@ def take_selfie():
     cap.release()
     cv.destroyAllWindows()
     
-#take_selfie()
+take_selfie()
+
+
 
 file_path = "/home/serenity-flaim/Desktop/CV/lab1/media/webcam_selfie.jpg"
 img = cv.imread(file_path, cv.IMREAD_COLOR)
@@ -40,11 +42,34 @@ def get_dominant_color(center_pixel):
     else:
         return (255, 0, 0)
 
+
+cap = cv.VideoCapture(0)
+ok, img = cap.read()
+while True:
+    ok, img = cap.read()
+    if not ok:
+        break
+    h, w = img.shape[:2]
+    center_x = w//2
+    center_y = h//2
+    get_dominant_color(img[center_x, center_y])
+    draw_rectangle(150, 50, get_dominant_color(img[center_x, center_y]), -1)
+    draw_rectangle(50, 150, get_dominant_color(img[center_x, center_y]), -1)
+    cv.imshow('img', img)
+    if cv.waitKey(1) & 0xFF == ord('q'):
+        break
+    
+
+
 h, w = img.shape[:2]
 center_x = w//2
 center_y = h//2
+print(get_dominant_color(img[center_x, center_y]))
 draw_rectangle(150, 50, get_dominant_color(img[center_x, center_y]), -1)
 draw_rectangle(50, 150, get_dominant_color(img[center_x, center_y]), -1)
+
+
+
 cv.namedWindow("cross", cv.WINDOW_AUTOSIZE)
 cv.imshow("cross", img)
 cv.waitKey(0)

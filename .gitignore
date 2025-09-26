@@ -3,7 +3,9 @@ lab1/lib
 lab1/lib64
 lab1/include
 lab1/bin
-lab1/media/webcam_selfie.jpg
+lab1/media/lab1/webcam_selfie.jpg
+lab1/media/lab1/webcam_selfie2.jpg
 lab1/pyvenv.cfg
-lab1/media/webcamOutput.mp4
-
+lab1/media/lab1/webcamOutput.mp4
+*.docx
+*.docx#

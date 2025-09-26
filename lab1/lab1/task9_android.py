@@ -1,7 +1,7 @@
 import cv2 as cv
 
 def display_phone_camera():
-    url = "http://192.168.1.47:8080/video"
+    url = "http://10.205.66.144:8080/video"
     cap = cv.VideoCapture(url)
     
     while True:
