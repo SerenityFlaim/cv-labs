@@ -22,19 +22,22 @@ while True:
     bw_filter = cv.dilate(cv.erode(mask, kernel, iterations=1), kernel, iterations=1)
     bw_filter = cv.erode(cv.dilate(bw_filter, kernel, iterations=1), kernel, iterations=1)
 
-    contours, _ = cv.findContours(bw_filter, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+
+    M = cv.moments(bw_filter)
+    area = M['m00']
+    print(area)
     final_img = img
-    if contours:
-        max_countour = max(contours, key=cv.contourArea)
-        area = cv.contourArea(max_countour)
-        x, y, w, h = cv.boundingRect(max_countour)
-        M = cv.moments(max_countour)
+    if area:
+        # max_countour = max(contours, key=cv.contourArea)
+        # area = cv.contourArea(max_countour)
+        # x, y, w, h = cv.boundingRect(max_countour)
+        # M = cv.moments(max_countour)
         if M['m00'] != 0:
             cx = int(M['m10'] / M['m00'])
             cy = int(M['m01'] / M['m00'])
             cv.circle(final_img, (cx, cy), 6, (0,255,0), -1)
 
-        cv.rectangle(final_img, (x, y), (x + w, y + h), (0, 0, 0), 2)
+        #cv.rectangle(final_img, (x, y), (x + w, y + h), (0, 0, 0), 2)
         cv.putText(final_img, f"Area: {int(area)}", (10,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
         cv.putText(final_img, f"Centroid: ({cx},{cy})", (10,60), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,0), 2)
     else:
