@@ -17,7 +17,6 @@ def form_gauss_kernel(n, sq_deviation):
     return ker
 
 
-
 kernel3 = form_gauss_kernel(3, SQUARE_DEVIATION)
 kernel5 = form_gauss_kernel(5, SQUARE_DEVIATION)
 kernel7 = form_gauss_kernel(7, SQUARE_DEVIATION)
@@ -37,20 +36,27 @@ print("Normalized_7 - Sum: ", kernel7.sum(), "\n", kernel7)
 
 image = cv.imread("/home/serenity-flaim/Desktop/CV/lab1/media/lab3/sonic_wisdom.jpg")
 grayscale_img = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-cv.imwrite("/home/serenity-flaim/Desktop/CV/lab1/media/lab3/grayscale.jpg", grayscale_img)
+#cv.imwrite("/home/serenity-flaim/Desktop/CV/lab1/media/lab3/grayscale.jpg", grayscale_img)
 
 h, w = grayscale_img.shape[:2]
-blur_image = np.array([[0.0 for _ in range(w)] for _ in range(h)])
+dims = [3, 7]
+deviations = [3, 30]
 
-padding = MX_DIMENSION // 2
-padded_img = np.pad(grayscale_img, padding, mode='constant', constant_values=0)
+for dim in dims:
+    for dvn in deviations:
+        cur_ker = form_gauss_kernel(dim, dvn)
+        cur_ker = cur_ker / cur_ker.sum()
 
+        padding = dim // 2
+        padded_img = np.pad(grayscale_img, padding, mode='constant', constant_values=0)
+        blur_image = np.array([[0.0 for _ in range(w)] for _ in range(h)])
 
-for i in range(h):
-    for j in range(w):
-        process_region = padded_img[i:i+MX_DIMENSION, j:j+MX_DIMENSION]
-        val = np.sum(process_region * kernel5)
-        blur_image[i, j] = val
+        for i in range(h):
+            for j in range(w):
+                process_region = padded_img[i:i+dim, j:j+dim]
+                val = np.sum(process_region * cur_ker)
+                blur_image[i, j] = val
 
-blur_image = np.clip(blur_image, 0, 255).astype(np.uint8)
-cv.imwrite("/home/serenity-flaim/Desktop/CV/lab1/media/lab3/gaussian_blur.jpg", blur_image)
+        blur_image = np.clip(blur_image, 0, 255).astype(np.uint8)
+        filename = f"gaussian_blur_dim{dim}_dvn{dvn}.png"
+        cv.imwrite(f"/home/serenity-flaim/Desktop/CV/lab1/media/lab3/{filename}.jpg", blur_image)
