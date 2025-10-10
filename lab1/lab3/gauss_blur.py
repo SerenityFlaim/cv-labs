@@ -58,5 +58,9 @@ for dim in dims:
                 blur_image[i, j] = val
 
         blur_image = np.clip(blur_image, 0, 255).astype(np.uint8)
-        filename = f"gaussian_blur_dim{dim}_dvn{dvn}.png"
+        filename = f"gaussian_blur_dim{dim}_dvn{dvn}"
         cv.imwrite(f"/home/serenity-flaim/Desktop/CV/lab1/media/lab3/{filename}.jpg", blur_image)
+
+        cv_blur = cv.GaussianBlur(grayscale_img, (dim, dim), dvn)
+        cv_filename = f"CV_blur_dim{dim}_dvn{dvn}"
+        cv.imwrite(f"/home/serenity-flaim/Desktop/CV/lab1/media/lab3/{cv_filename}.jpg", cv_blur)
