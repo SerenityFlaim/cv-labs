@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 
 MX_DIMENSION = 5
-SQUARE_DEVIATION = 5
+SQUARE_DEVIATION = 1
 
 def form_gauss_kernel(n, sq_deviation):
     ker = np.array([[0.0 for _ in range(n)] for _ in range(n)])
@@ -21,7 +21,8 @@ kernel3 = form_gauss_kernel(3, SQUARE_DEVIATION)
 kernel5 = form_gauss_kernel(5, SQUARE_DEVIATION)
 kernel7 = form_gauss_kernel(7, SQUARE_DEVIATION)
 
-# print("KER 3\n", kernel3)
+print("KER 3\n", kernel3, "\n")
+print(kernel3.sum())
 # print("KER 5\n", kernel5)
 # print("KER 7\n", kernel7)
 
