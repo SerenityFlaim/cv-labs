@@ -36,9 +36,6 @@ def border_processor(img_path):
     img_grayscale = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     img_blurred = cv.GaussianBlur(img_grayscale, (5, 5), 1)
 
-    cv.imshow("Original", img)
-    cv.imshow("Grayscale|Blurred", img_blurred)
-
     Gx = np.array([
         [-1, 0, 1],
         [-2, 0, 2],
@@ -71,6 +68,33 @@ def border_processor(img_path):
     tg = gradient_y / zero_block
 
     gradient_angle = get_grad_angle(gradient_x, gradient_y, tg)
+
+    suppression = np.zeros_like(v_length, dtype=np.uint8)
+    hs, ws = v_length.shape[:2]
+
+    for i in range(1, hs - 1):
+        for j in range(1, ws - 1):
+            direction = gradient_angle[i, j]
+            length = v_length[i, j]
+
+            if direction in [0, 4]:
+                neighbours = [v_length[i, j - 1], v_length[i, j + 1]]
+            elif direction in [1, 5]:
+                neighbours = [v_length[i - 1, j + 1], v_length[i + 1, j - 1]]
+            elif direction in [2, 6]:
+                neighbours = [v_length[i - 1, j], v_length[i + 1, j]]
+            else:
+                neighbours = [v_length[i - 1, j - 1], v_length[i + 1, j + 1]]
+
+            if length > max(neighbours):
+                suppression[i, j] = 255
+            else:
+                suppression[i, j] = 0
+
+
+    cv.imshow("Original", img)
+    cv.imshow("Grayscale|Blurred", img_blurred)
+    cv.imshow("Non-Maximum Suppression", suppression)
 
     cv.waitKey(0)
     cv.destroyAllWindows()
