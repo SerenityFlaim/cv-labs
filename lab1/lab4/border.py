@@ -34,7 +34,7 @@ def get_grad_angle(gradient_x, gradient_y, tg):
 def border_processor(img_path):
     img = cv.imread(img_path)
     img_grayscale = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    img_blurred = cv.GaussianBlur(img_grayscale, (5, 5), 1)
+    img_blurred = cv.GaussianBlur(img_grayscale, (7, 7), 2)
 
     Gx = np.array([
         [-1, 0, 1],
@@ -91,10 +91,31 @@ def border_processor(img_path):
             else:
                 suppression[i, j] = 0
 
+    max_gradient = np.max(v_length)
+    higher_threshold = max_gradient // 11
+    lower_threshold = max_gradient // 4
+
+    vivid_border = (v_length >= higher_threshold)
+    blur_border = ((v_length >= lower_threshold) & (v_length < higher_threshold))
+
+    final = np.zeros_like(suppression, dtype=np.uint8)
+    final[vivid_border & (suppression == 255)] = 255
+
+    for i in range(1, hs - 1):
+        for j in range(1, ws - 1):
+            if blur_border[i, j] and suppression[i, j] == 255:
+                region = final[i-1:i+2, j-1:j+2]
+                if np.any(region == 255):
+                    final[i, j] = 255
+
+    mask = img.copy()
+    mask[final == 255] = [0, 0, 255]
 
     cv.imshow("Original", img)
-    cv.imshow("Grayscale|Blurred", img_blurred)
-    cv.imshow("Non-Maximum Suppression", suppression)
+    # cv.imshow("Grayscale|Blurred", img_blurred)
+    # cv.imshow("Non-Maximum Suppression", suppression)
+    cv.imshow("Double Threshold Result", final)
+    cv.imshow("Border", mask)
 
     cv.waitKey(0)
     cv.destroyAllWindows()
