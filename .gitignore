@@ -9,3 +9,9 @@ lab1/pyvenv.cfg
 lab1/media/lab1/webcamOutput.mp4
 *.docx
 *.docx#
+lab1/NumeroDUO/yolo/lib
+lab1/NumeroDUO/yolo/bin
+lab1/NumeroDUO/yolo/share
+lab1/NumeroDUO/yolo/lib64
+lab1/media/NumeroDUO
+lab1/NumeroDUO/yolo/numero_duo.yolov8

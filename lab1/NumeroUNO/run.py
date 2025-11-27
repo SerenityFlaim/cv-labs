@@ -2,8 +2,8 @@ import cv2
 from kcf import Tracker
 
 if __name__ == '__main__':
-    cap = cv2.VideoCapture(f"/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/BallRoll.mp4")
-    out_kcf = cv2.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/ballroll_skcf.mp4",
+    cap = cv2.VideoCapture(f"/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/StudentWalk.mp4")
+    out_kcf = cv2.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/studentwalk_skcf.mp4",
                               cv2.VideoWriter_fourcc(*'mp4v'),
                               cap.get(cv2.CAP_PROP_FPS),
                               (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),

@@ -24,7 +24,7 @@ def multi_tracking(video_path):
     # -------------------------------------
     tracker_mf = cv.legacy.TrackerMedianFlow_create()
     tracker_mf.init(frame, bbox)
-    out_mf = cv.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/output_mf_cardrive.mp4",
+    out_mf = cv.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/output_mf_studentwalk.mp4",
                               cv.VideoWriter_fourcc(*'mp4v'),
                               cap.get(cv.CAP_PROP_FPS),
                               (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)),
@@ -35,7 +35,7 @@ def multi_tracking(video_path):
     # -------------------------------------
     tracker_kcf = cv.TrackerKCF_create()
     tracker_kcf.init(frame, bbox)
-    out_kcf = cv.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/output_kcf_cardrive.mp4",
+    out_kcf = cv.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/output_kcf_studentwalk.mp4",
                               cv.VideoWriter_fourcc(*'mp4v'),
                               cap.get(cv.CAP_PROP_FPS),
                               (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)),
@@ -46,7 +46,7 @@ def multi_tracking(video_path):
     # -------------------------------------
     tracker_csrt = cv.TrackerCSRT_create()
     tracker_csrt.init(frame, bbox)
-    out_csrt = cv.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/output_csrt_cardrive.mp4",
+    out_csrt = cv.VideoWriter("/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/output_csrt_studentwalk.mp4",
                                cv.VideoWriter_fourcc(*'mp4v'),
                                cap.get(cv.CAP_PROP_FPS),
                                (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)),
@@ -156,5 +156,5 @@ def multi_tracking(video_path):
     cv.destroyAllWindows()
 
 
-video_path = "/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/BasketRing.mp4"
+video_path = "/home/serenity-flaim/Desktop/CV/lab1/media/NumeroUNO/StudentWalk.mp4"
 multi_tracking(video_path)
