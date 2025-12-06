@@ -4,7 +4,7 @@ from numpy.fft import fft, ifft
 from scipy.signal import get_window
 import matplotlib.pyplot as plt
 
-def noise_reduction(input_file, output_file, frame_size=4096, overlap=0.5, noise_start=0, noise_end=3000, suppression_factor=2, protection_factor=0.01):
+def noise_cancelling(input_file, output_file, frame_size=4096, overlap=0.5, noise_start=0, noise_end=3000, suppression_factor=2, protection_factor=0.01):
     audio, sample_rate = sf.read(input_file)
 
     if audio.ndim > 1:
@@ -71,4 +71,4 @@ def noise_reduction(input_file, output_file, frame_size=4096, overlap=0.5, noise
     sf.write(output_file, output_signal, sample_rate)
 
 
-noise_reduction('/home/serenity-flaim/Desktop/CV/lab1/media/lab5/car.wav', '/home/serenity-flaim/Desktop/CV/lab1/media/lab5/output.wav')
+noise_cancelling('/home/serenity-flaim/Desktop/CV/lab1/media/lab5/car.wav', '/home/serenity-flaim/Desktop/CV/lab1/media/lab5/output.wav')
